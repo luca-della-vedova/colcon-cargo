@@ -92,14 +92,18 @@ class CargoBuildTask(TaskExtensionPoint):
             Path(self.context.args.install_base), pkg.name,
             'PATH', 'bin'
         )
+        logger.info(f'Hooks are {additional_hooks}')
 
     # Overridden by colcon-ros-cargo
     def _build_cmd(self, cargo_args):
         args = self.context.args
-        return [
+        ret = [
             CARGO_EXECUTABLE, 'install',
             '--force',
             '--quiet',
             '--path', args.path,
             '--root', args.install_base,
         ] + cargo_args
+        logger.info(
+            "Ret value is '{ret}'".format_map(locals()))
+        return ret
