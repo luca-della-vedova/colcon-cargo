@@ -77,6 +77,6 @@ def test_build_package():
 
             # Make sure the binary is compiled
             install_base = Path(task.context.args.install_base)
-            assert (install_base / 'bin' / SAMPLE_PACKAGE_NAME).is_file()
+            assert (install_base / 'Bin' / SAMPLE_PACKAGE_NAME).is_file()
     finally:
         event_loop.close()
