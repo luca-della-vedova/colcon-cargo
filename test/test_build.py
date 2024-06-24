@@ -15,7 +15,9 @@ from colcon_core.subprocess import new_event_loop
 from colcon_core.task import TaskContext
 import pytest
 
-test_project_path = Path(__file__).parent / 'rust-sample-package'
+SAMPLE_PACKAGE_NAME = 'rust-sample-package'
+
+test_project_path = Path(__file__).parent / SAMPLE_PACKAGE_NAME
 
 
 @pytest.fixture(autouse=True)
@@ -33,7 +35,7 @@ def test_package_identification():
     desc = PackageDescriptor(test_project_path)
     cpi.identify(desc)
     assert desc.type == 'cargo'
-    assert desc.name == 'rust-sample-app'
+    assert desc.name == SAMPLE_PACKAGE_NAME
 
 
 @pytest.mark.skipif(
@@ -75,6 +77,6 @@ def test_build_package():
 
             # Make sure the binary is compiled
             install_base = Path(task.context.args.install_base)
-            assert (install_base / 'bin' / 'rust-sample-app').is_file()
+            assert (install_base / 'bin' / SAMPLE_PACKAGE_NAME).is_file()
     finally:
         event_loop.close()
