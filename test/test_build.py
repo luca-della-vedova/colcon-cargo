@@ -2,6 +2,7 @@
 # Licensed under the Apache License, Version 2.0
 
 import asyncio
+import os
 from pathlib import Path
 import shutil
 import tempfile
@@ -41,6 +42,9 @@ def test_package_identification():
 @pytest.mark.skipif(
     not shutil.which('cargo'),
     reason='Rust must be installed to run this test')
+@pytest.mark.skipif(
+    os.name != 'nt',
+    reason='Only test windows')
 def test_build_package():
     event_loop = new_event_loop()
     asyncio.set_event_loop(event_loop)
@@ -77,6 +81,7 @@ def test_build_package():
 
             # Make sure the binary is compiled
             install_base = Path(task.context.args.install_base)
-            assert (install_base / 'Bin' / SAMPLE_PACKAGE_NAME).is_file()
+            assert \
+                (install_base / 'bin' / f'{SAMPLE_PACKAGE_NAME}.exe').is_file()
     finally:
         event_loop.close()

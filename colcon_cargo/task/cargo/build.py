@@ -100,7 +100,6 @@ class CargoBuildTask(TaskExtensionPoint):
         ret = [
             CARGO_EXECUTABLE, 'install',
             '--force',
-            '--quiet',
             '--path', args.path,
             '--root', args.install_base,
         ] + cargo_args
